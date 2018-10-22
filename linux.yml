@@ -5,7 +5,10 @@
   become: true
   become_method: sudo
 
+  vars:
+    tools_dir: "/home/ramana/Documents/my-tools"
+
   roles:
-    - { role: node }
+    - { role: vim }
     # - { role: terminfo, tags: terminfo }
     # - { role: vim, tags: vim }

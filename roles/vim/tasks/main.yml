@@ -1,0 +1,6 @@
+---
+
+- name: nvim | fetch or update neovim git repo
+  git:
+    repo: https://github.com/neovim/neovim.git
+    dest: "{{ tools_dir }}/neovim"
