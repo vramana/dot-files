@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+
+  connection: local
+  become: true
+  become_method: sudo
+
+  roles:
+    - { role: node }
+    # - { role: terminfo, tags: terminfo }
+    # - { role: vim, tags: vim }
