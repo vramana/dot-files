@@ -1,6 +1,43 @@
 ---
 
-- name: nvim | fetch or update neovim git repo
-  git:
-    repo: https://github.com/neovim/neovim.git
-    dest: "{{ tools_dir }}/neovim"
+# - name: update apt cache
+#   apt: update_cache=yes
+#
+# - name: nvim | fetch or update neovim git repo
+#   git:
+#     repo: https://github.com/neovim/neovim.git
+#     dest: "{{ tools_dir }}/neovim"
+- name: install ninja
+  apt:
+    state: present
+    name: [ 'ninja-build', 'cmake', 'libtool-bin', 'git', 'tilix', 'zsh' ]
+  become: true
+  become_method: sudo
+
+- name: install pynvim
+  pip:
+    name: pynvim
+    extra_args: --user
+
+- name: compile nvim
+  make:
+    chdir: "{{ tools_dir }}/neovim"
+    params: CMAKE_BUILD_TYPE=RelWithDebInfo
+
+- name: install nvim
+  make:
+    chdir: "{{ tools_dir }}/neovim"
+    target: install
+  become: true
+  become_method: sudo
+
+- name: download yarn
+  get_url:
+   url: "https://github.com/yarnpkg/yarn/releases/download/v1.13.0/yarn_1.13.0_all.deb"
+   dest: "{{ tools_dir }}"
+
+- name: install yarn
+  command: "dpkg -i {{tools_dir}}/yarn_1.13.0_all.deb"
+  become: true
+  become_method: sudo
+
