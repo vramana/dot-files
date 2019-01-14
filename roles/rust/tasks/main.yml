@@ -1,0 +1,17 @@
+---
+- name: download installer rustup
+  get_url:
+    url: https://static.rust-lang.org/rustup.sh
+    dest: /tmp/rustup.sh
+    mode: "0750"
+  register: cargo_download_installer_rustup
+  until: cargo_download_installer_rustup is succeeded
+  retries: 3
+
+- name: run installer rustup
+  command: ./rustup.sh -y
+  args:
+    chdir: /tmp
+
+- name: install rg
+  command: cargo install ripgrep

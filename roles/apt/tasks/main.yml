@@ -1,0 +1,31 @@
+---
+
+# TODO add chrome apt_repository
+
+- name: install apt dependencies
+  apt:
+    state: present
+    name: [
+      'ninja-build',
+      'cmake',
+      'libtool-bin',
+      'git',
+      'tilix',
+      'zsh',
+      'xclip',
+      'curl',
+      'clang',
+      'build-essential',
+      'libncurses-dev'
+    ]
+  become: true
+  become_method: sudo
+
+- name: tilix vte link
+  file:
+    src:  /etc/profile.d/vte-2.91.sh
+    dest: /etc/profile.d/vte.sh
+    state: link
+  become: true
+  become_method: sudo
+

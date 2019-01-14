@@ -6,13 +6,14 @@
   environment:
     PATH: "{{ ansible_env.PATH }}:/home/ramana/.local/bin"
 
-
-
   vars:
     tools_dir: "/home/ramana/Documents/my-tools"
 
   roles:
-    - { role: vim }
-    # - { role: terminfo, tags: terminfo }
-    # - { role: vim, tags: vim }
+    # - { role: apt }
+    # - { role: vim }
+    # - { role: rust }
+    # - { role: node }
+    - { role: emacs }
+
 

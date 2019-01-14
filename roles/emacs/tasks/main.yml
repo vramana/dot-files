@@ -1,0 +1,37 @@
+---
+
+- name: Download emacs
+  get_url:
+    url: http://mirrors.syringanetworks.net/gnu/emacs/emacs-26.1.tar.gz
+    dest: /tmp/emacs-26.1.tar.gz
+    mode: "0750"
+
+- name: unzip emacs
+  command: tar -xzvf emacs-26.1.tar.gz
+  args:
+    chdir: /tmp/
+    creates: /tmp/emacs-26.1/configure
+
+- name: get emacs dependencies
+  apt: name=emacs state=build-dep
+  become: true
+  become_method: sudo
+
+
+- name: configure emacs
+  command: ./configure
+  args:
+    chdir: /tmp/emacs-26.1
+
+- name: build emacs
+  make:
+    chdir: /tmp/emacs-26.1
+
+- name: install emacs
+  make:
+    target: install
+    chdir: /tmp/emacs-26.1
+  become: true
+  become_method: sudo
+
+

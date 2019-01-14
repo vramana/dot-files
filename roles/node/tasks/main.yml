@@ -1,0 +1,39 @@
+---
+
+- name: Download nvm
+  get_url:
+    url: https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh
+    dest: /tmp/nvm.sh
+    mode: "0750"
+
+- name: Install nvm
+  command: sh nvm.sh
+  args:
+    chdir: /tmp
+    creates: ~/.nvm/nvm.sh
+
+- name: Install node and set version
+  shell: >
+    /bin/bash -c "source ~/.nvm/nvm.sh && nvm install stable && nvm alias default stable"
+    creates=/home/{{ ansible_user_id }}/.nvm/alias
+
+- name: download yarn
+  get_url:
+    url: https://github.com/yarnpkg/yarn/releases/download/v1.13.0/yarn_1.13.0_all.deb
+    dest: /tmp/yarn_1.13.0_all.deb
+    mode: "0750"
+
+- name: install yarn
+  command: dpkg -i yarn_1.13.0_all.deb
+  args:
+    chdir: /tmp
+    creates: /usr/bin/yarn
+  become: true
+  become_method: sudo
+
+- name: install prettier
+  command: yarn global add prettier
+  args:
+    creates: /home/ramana/.yarn/bin/prettier
+
+
