@@ -14,6 +14,7 @@
     # - { role: vim }
     # - { role: rust }
     # - { role: node }
-    - { role: emacs }
+    # - { role: emacs }
+    - { role: go }
 
 
