@@ -1,0 +1,22 @@
+---
+
+- name: Download iosevka
+  get_url:
+    url: https://github.com/be5invis/Iosevka/releases/download/v2.0.2/02-iosevka-term-2.0.2.zip
+    dest: /tmp/iosevka.zip
+
+- name: make local fonts dir
+  file:
+    dest: ~/.fonts
+    state: directory
+
+- name: Download iosevka
+  unarchive:
+    src: /tmp/iosevka.zip
+    dest: ~/.fonts/
+    creates: ~/.fonts/iosevka
+
+- name: reset font cache
+  command: fc-cache -f -v
+
+

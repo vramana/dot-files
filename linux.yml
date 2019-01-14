@@ -15,6 +15,7 @@
     # - { role: rust }
     # - { role: node }
     # - { role: emacs }
-    - { role: go }
+    # - { role: go }
+    - { role: fonts }
 
 
